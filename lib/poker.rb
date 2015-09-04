@@ -59,13 +59,16 @@ class Poker
     return new_cards
   end
 
+  def sort_by_suit(cards)
+  end
+
   def royal_flush?
     cards = self.change_cards
-    suit_count = 0
-    number_count = 0
     cards.sort_by! do |card|
       card[:number]
     end
+    suit_count = 0
+    number_count = 0
     if cards[0][:number] == 1 && cards[0][:suit] == cards[1][:suit] && cards[1][:number] == 10
       number_count += 1
       suit_count += 1
@@ -84,11 +87,11 @@ class Poker
 
   def straight_flush?
     cards = self.change_cards
-    suit_count = 0
-    number_count = 0
     cards.sort_by! do |card|
       card[:number]
     end
+    suit_count = 0
+    number_count = 0
     for i in 0..3
       if cards[i][:suit] == cards[i+1][:suit] && cards[i][:number]+1 == cards[i+1][:number]
         suit_count += 1
@@ -99,17 +102,22 @@ class Poker
   end
 
   def four_of_a_kind?
+    four_of_a_kind = false
     cards = self.change_cards
-    unique = cards.uniq { |c| c[:number] }
-    return unique.length == 2
+    grouped = cards.group_by{ |c| c[:number] }
+    keys = grouped.keys
+    for key in keys
+      if grouped[key].length == 4
+        four_of_a_kind = true
+      end
+    end
+    return four_of_a_kind
   end
 
   def full_house?
-    # three_of_kind = false
-    # pair = false
-    #
-    #
-    # return three_of_a_kind && pair
+    # cards = self.change_cards
+    # unique = cards.uniq { |c| c[:number] }
+    # return unique.length == 2
   end
 
   def flush?
@@ -119,6 +127,16 @@ class Poker
   end
 
   def three_of_a_kind?
+    three_of_a_kind = false
+    cards = self.change_cards
+    grouped = cards.group_by{ |c| c[:number] }
+    keys = grouped.keys
+    for key in keys
+      if grouped[key].length == 3
+        three_of_a_kind = true
+      end
+    end
+    return three_of_a_kind
   end
 
   def two_pair?
@@ -149,20 +167,20 @@ class Poker
     elsif cards.flush?
       return "Flush."
     elsif cards.straight?
-      return "Straight"
+      return "Straight."
     elsif cards.three_of_a_kind?
-      return "Three of a kind"
+      return "Three of a kind."
     elsif cards.two_pair?
-      return "Two Pair"
+      return "Two Pair."
     elsif cards.pair?
-      return "Pair"
+      return "Pair."
     else
       return "High Card: " + cards.high_card.to_s
     end
   end
 
 end
-
+royal_flush = Poker.new(["Ace of Diamonds", "King of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "10 of Diamonds"])
 straight_flush = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
 four_kind = Poker.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-three_kind = Poker.new(["4 of Hearts", "Ace of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+three_kind = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
