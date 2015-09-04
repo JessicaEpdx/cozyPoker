@@ -124,13 +124,21 @@ class Poker
       if grouped[key].length == 3
         three_of_a_kind = true
       elsif grouped[key].length == 2
-        pair == 2
+        pair = true
       end
     end
     return three_of_a_kind && pair
   end
 
   def flush?
+    cards = self.change_cards
+    suit_count = 0
+    for i in 0..3
+      if cards[i][:suit] == cards[i+1][:suit]
+        suit_count += 1
+      end
+    end
+    return suit_count == 4
   end
 
   def straight?
@@ -174,6 +182,8 @@ class Poker
       return "Straight Flush!"
     elsif cards.four_of_a_kind?
       return "Four of a Kind!"
+    elsif cards.full_house?
+      return "Full House!"
     elsif cards.flush?
       return "Flush."
     elsif cards.straight?
@@ -195,3 +205,4 @@ straight_flush = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds",
 four_kind = Poker.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
 three_kind = Poker.new(["4 of Hearts", "3 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
 full_house = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+straight_flush = Poker.new(["10 of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
