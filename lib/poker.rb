@@ -9,6 +9,7 @@ class Poker
     else
       @cards = cards
     end
+    puts self.get_best_hand
   end
 
   def cards_reminder
@@ -27,7 +28,7 @@ class Poker
   def change_cards
     cards = @cards
     new_cards = []
-    numbers = [2, 3, 4, 5, 6, 7, 8, 9]
+    numbers = [2, 3, 4, 5, 6, 7, 8, 9, 10]
     for card in cards do
       card_object = {number: 0, suit:0}
       for number in numbers
@@ -53,24 +54,39 @@ class Poker
       elsif card.include? "Spades"
         card_object[:suit] = 4
       end
-      new_cards.push(cardObj)
+      new_cards.push(card_object)
     end
     return new_cards
   end
-  #
+
   def royal_flush?
     cards = self.change_cards
     suit_count = 0
     number_count = 0
-    number_sort = []
+    cards.sort_by! do |card|
+      card[:number]
+    end
+    if cards[0][:number] == 1 && cards[0][:suit] == cards[1][:suit] && cards[1][:number] == 10
+      number_count += 1
+      suit_count += 1
+    else
+      return false
+    end
+    for i in 1..3
+      puts cards[i][:number] + 1
+      if cards[i][:suit] == cards[i+1][:suit] && cards[i][:number] + 1 == cards[i+1][:number]
+        suit_count += 1
+        number_count += 1
+      end
+    end
+    return number_count == 4 && suit_count == 4
+  end
+
+  def straight_flush?
 
   end
 
-  def straight_flush?(cards)
-
-  end
-
-  def four_of_a_kind?(cards)
+  def four_of_a_kind?
     # count = 0
     # for card in cards do
     #   if cards[-1] != card
@@ -83,7 +99,7 @@ class Poker
     # return count == 4
   end
 
-  def full_house?(cards)
+  def full_house?
     # three_of_kind = false
     # pair = false
     #
@@ -91,22 +107,23 @@ class Poker
     # return three_of_a_kind && pair
   end
 
-  def flush?(cards)
+  def flush?
   end
 
-  def straight?(cards)
+  def straight?
   end
 
-  def three_of_a_kind?(cards)
+  def three_of_a_kind?
   end
 
-  def two_pair?(cards)
+  def two_pair?
   end
 
-  def pair?(cards)
+  def pair?
   end
 
-  def high_card(cards)
+  def high_card
+    cards = self.change_cards
     high_card = 0
     for card in cards do
       if card[:number].to_i >= high_card.to_i
@@ -117,7 +134,7 @@ class Poker
   end
 
   def get_best_hand
-    cards = @cards.change_cards
+    cards = self
     if cards.royal_flush?
       return "Royal Flush!"
     elsif cards.straight_flush?
@@ -128,17 +145,17 @@ class Poker
       return "Flush."
     elsif cards.straight?
       return "Straight"
-    elsif cards.three_of_kind?
+    elsif cards.three_of_a_kind?
       return "Three of a kind"
     elsif cards.two_pair?
       return "Two Pair"
     elsif cards.pair?
       return "Pair"
     else
-      return "High Card: " + high_card(cards).to_s
+      return "High Card: " + cards.high_card.to_s
     end
   end
 
 end
 
-cards = Poker.new(["2 of Diamonds", "3 of Diamonds", "4 of Diamonds", "6 of Diamonds", "5 of Diamonds"])
+cards = Poker.new(["Ace of Diamonds", "3 of Diamonds", "Queen of Diamonds", "King of Diamonds", "10 of Diamonds"])
