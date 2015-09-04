@@ -9,11 +9,13 @@ class Poker
     else
       @cards = cards
     end
-    puts self.get_best_hand
   end
 
   def cards_reminder
     cards = @cards
+    cards.sort_by! do |card|
+      card[0]
+    end
     result = ''
     comma = ", "
     for card in cards do
@@ -36,22 +38,22 @@ class Poker
           card_object[:number] = number
         end
       end
-      if card.include? "Jack"
+      if card.downcase.include? "jack"
         card_object[:number] = 11
-      elsif card.include? "Queen"
+      elsif card.downcase.include? "queen"
         card_object[:number] = 12
-      elsif card.include? "King"
+      elsif card.downcase.include? "king"
         card_object[:number] = 13
-      elsif card.include? "Ace"
+      elsif card.downcase.include? "ace"
         card_object[:number] = 1
       end
-      if card.include? "Hearts"
+      if card.downcase.include? "hearts"
         card_object[:suit] = 1
-      elsif card.include? "Diamonds"
+      elsif card.downcase.include? "diamonds"
         card_object[:suit] = 2
-      elsif card.include? "Clubs"
+      elsif card.downcase.include? "clubs"
         card_object[:suit] = 3
-      elsif card.include? "Spades"
+      elsif card.downcase.include? "spades"
         card_object[:suit] = 4
       end
       new_cards.push(card_object)
