@@ -26,95 +26,56 @@ class Poker
 
   def change_cards
     cards = @cards
-    newCards = []
+    new_cards = []
     numbers = [2, 3, 4, 5, 6, 7, 8, 9]
     for card in cards do
-      cardObj = {number: 0, suit:0}
+      card_object = {number: 0, suit:0}
       for number in numbers
         if card.include? number.to_s
-          cardObj[:number] = number
+          card_object[:number] = number
         end
       end
       if card.include? "Jack"
-        cardObj[:number] = 11
+        card_object[:number] = 11
       elsif card.include? "Queen"
-        cardObj[:number] = 12
+        card_object[:number] = 12
       elsif card.include? "King"
-        cardObj[:number] = 13
+        card_object[:number] = 13
       elsif card.include? "Ace"
-        cardObj[:number] = 1
+        card_object[:number] = 1
       end
       if card.include? "Hearts"
-        cardObj[:suit] = 1
+        card_object[:suit] = 1
       elsif card.include? "Diamonds"
-        cardObj[:suit] = 2
+        card_object[:suit] = 2
       elsif card.include? "Clubs"
-        cardObj[:suit] = 3
+        card_object[:suit] = 3
       elsif card.include? "Spades"
-        cardObj[:suit] = 4
+        card_object[:suit] = 4
       end
-      newCards.push(cardObj)
+      new_cards.push(cardObj)
     end
-    return newCards
+    return new_cards
   end
-
+  #
   def royal_flush?
     cards = self.change_cards
-    suitCount = 0
-    numberCount = 0
-    sorted = []
+    suit_count = 0
+    number_count = 0
+    number_sort = []
 
-    for card in cards do
-      if cards[-1] != card
-        nextCard = cards[cards.index(card) + 1]
-        if card[:suit] == nextCard[:suit]
-          suitCount += 1
-        end
-      end
-    end
-    if suitCount == 4
-      for card in cards do
-        sorted.push(card[:number])
-      end
-      sorted = sorted.sort
-      if sorted[0] == 1
-        numberCount += 1
-      end
-      sorted.
-    end
   end
 
   def straight_flush?(cards)
-    # flushCount = 0
-    # for card in cards do
-    #   if cards[-1] != card
-    #     nextCard = cards[cards.index(card) + 1]
-    #     if card[:suit] == nextCard[:suit]
-    #       flushCount += 1
-    #     end
-    #   end
-    # end
-    # return flushCount == 4
-    # sorted = []
-    # count = 0
-    # for card in cards do
-    #   sorted.push(card[:number])
-    # end
-    # sorted = sorted.sort
-    # for num in sorted do
-    #   if num + 1 == sorted[sorted.index(num)+1]
-    #     count += 1
-    #   end
-    # end
-    # return count == 4
+
   end
 
   def four_of_a_kind?(cards)
     # count = 0
     # for card in cards do
     #   if cards[-1] != card
-    #     nextCard = cards[cards.index(card) + 1]
-    #     if card[:number] == nextCard[:number]
+    #     nex_card = cards[cards.index(card) + 1]
+    #     if card[:number] == nex_card[:number]
     #       count += 1
     #     end
     #   end
@@ -122,7 +83,7 @@ class Poker
     # return count == 4
   end
 
-  def full_house(cards)
+  def full_house?(cards)
     # three_of_kind = false
     # pair = false
     #
@@ -130,29 +91,29 @@ class Poker
     # return three_of_a_kind && pair
   end
 
-  def flush(cards)
+  def flush?(cards)
   end
 
-  def straight(cards)
+  def straight?(cards)
   end
 
-  def three_of_a_kind(cards)
+  def three_of_a_kind?(cards)
   end
 
-  def two_pair(cards)
+  def two_pair?(cards)
   end
 
-  def pair(cards)
+  def pair?(cards)
   end
 
   def high_card(cards)
-    highCard = 0
+    high_card = 0
     for card in cards do
-      if card[:number].to_i >= highCard.to_i
-        highCard = card[:number].to_i
+      if card[:number].to_i >= high_card.to_i
+        high_card = card[:number].to_i
       end
     end
-    return highCard
+    return high_card
   end
 
   def get_best_hand
@@ -169,7 +130,7 @@ class Poker
       return "Straight"
     elsif cards.three_of_kind?
       return "Three of a kind"
-    elsif cards.two_pair
+    elsif cards.two_pair?
       return "Two Pair"
     elsif cards.pair?
       return "Pair"
@@ -180,4 +141,4 @@ class Poker
 
 end
 
-# cards = Poker.new(["2 of Diamonds", "3 of Diamonds", "4 of Diamonds", "6 of Diamonds", "5 of Diamonds"])
+cards = Poker.new(["2 of Diamonds", "3 of Diamonds", "4 of Diamonds", "6 of Diamonds", "5 of Diamonds"])
