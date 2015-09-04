@@ -115,9 +115,19 @@ class Poker
   end
 
   def full_house?
-    # cards = self.change_cards
-    # unique = cards.uniq { |c| c[:number] }
-    # return unique.length == 2
+    three_of_a_kind = false
+    pair = false
+    cards = self.change_cards
+    grouped = cards.group_by{ |c| c[:number] }
+    keys = grouped.keys
+    for key in keys
+      if grouped[key].length == 3
+        three_of_a_kind = true
+      elsif grouped[key].length == 2
+        pair == 2
+      end
+    end
+    return three_of_a_kind && pair
   end
 
   def flush?
@@ -183,4 +193,5 @@ end
 royal_flush = Poker.new(["Ace of Diamonds", "King of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "10 of Diamonds"])
 straight_flush = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
 four_kind = Poker.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-three_kind = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+three_kind = Poker.new(["4 of Hearts", "3 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+full_house = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
