@@ -99,16 +99,9 @@ class Poker
   end
 
   def four_of_a_kind?
-    # count = 0
-    # for card in cards do
-    #   if cards[-1] != card
-    #     nex_card = cards[cards.index(card) + 1]
-    #     if card[:number] == nex_card[:number]
-    #       count += 1
-    #     end
-    #   end
-    # end
-    # return count == 4
+    cards = self.change_cards
+    unique = cards.uniq { |c| c[:number] }
+    return unique.length == 2
   end
 
   def full_house?
@@ -170,4 +163,6 @@ class Poker
 
 end
 
-cards = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
+straight_flush = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
+four_kind = Poker.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+three_kind = Poker.new(["4 of Hearts", "Ace of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
