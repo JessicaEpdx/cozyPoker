@@ -83,7 +83,19 @@ class Poker
   end
 
   def straight_flush?
-
+    cards = self.change_cards
+    suit_count = 0
+    number_count = 0
+    cards.sort_by! do |card|
+      card[:number]
+    end
+    for i in 0..3
+      if cards[i][:suit] == cards[i+1][:suit] && cards[i][:number]+1 == cards[i+1][:number]
+        suit_count += 1
+        number_count += 1
+      end
+    end
+    return suit_count == 4 && number_count == 4
   end
 
   def four_of_a_kind?
@@ -158,4 +170,4 @@ class Poker
 
 end
 
-cards = Poker.new(["Ace of Diamonds", "3 of Diamonds", "Queen of Diamonds", "King of Diamonds", "10 of Diamonds"])
+cards = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
