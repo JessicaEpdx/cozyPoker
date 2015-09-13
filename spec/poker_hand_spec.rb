@@ -1,15 +1,15 @@
 require('rspec')
-require('poker')
+require('poker_hand')
 
-describe('Poker') do
+describe('PokerHand') do
   before{
-    @random = Poker.new(['Ace of Diamonds', '2 of Hearts', 'Jack of Diamonds', 'King of Spades', '8 of Spades'])
-    @royal_flush = Poker.new(['10 of Diamonds', 'Jack of Diamonds', 'Queen of Diamonds', 'King of Diamonds', 'Ace of Diamonds'])
-    @straight_flush = Poker.new(['8 of Diamonds', '7 of Diamonds', '6 of Diamonds', '5 of Diamonds', '4 of Diamonds'])
+    @random = PokerHand.new(['Ace of Diamonds', '2 of Hearts', 'Jack of Diamonds', 'King of Spades', '8 of Spades'])
+    @royal_flush = PokerHand.new(['10 of Diamonds', 'Jack of Diamonds', 'Queen of Diamonds', 'King of Diamonds', 'Ace of Diamonds'])
+    @straight_flush = PokerHand.new(['8 of Diamonds', '7 of Diamonds', '6 of Diamonds', '5 of Diamonds', '4 of Diamonds'])
   }
   describe('initialize') do
     it("will return error message of hand has too many cards") do
-      expect{ Poker.new(['Ace of Diamonds', '2 of Hearts', 'Jack of Diamonds', 'King of Spades', '8 of Spades', 'Ace of Spades']) }.to raise_error(ArgumentError)
+      expect{ PokerHand.new(['Ace of Diamonds', '2 of Hearts', 'Jack of Diamonds', 'King of Spades', '8 of Spades', 'Ace of Spades']) }.to raise_error(ArgumentError)
     end
   end
   describe('cards_reminder') do

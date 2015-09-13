@@ -1,4 +1,4 @@
-class Poker
+class PokerHand
   attr_reader :cards
 
   def initialize(cards)
@@ -7,24 +7,8 @@ class Poker
     elsif cards.length < 5
       raise ArgumentError "You need more cards to play, try again."
     else
-      @cards = cards
+      @cards = cards.map(&:downcase)
     end
-  end
-
-  def cards_reminder
-    cards = @cards
-    cards.sort_by! do |card|
-      card[0]
-    end
-    result = ''
-    comma = ", "
-    for card in cards do
-      if cards[-1] != card
-        card = card + comma
-      end
-        result = result + card.to_s
-    end
-    return "Your hand: " + result
   end
 
   def change_cards
@@ -38,30 +22,28 @@ class Poker
           card_object[:number] = number
         end
       end
-      if card.downcase.include? "jack"
+      if card.include? "jack"
         card_object[:number] = 11
-      elsif card.downcase.include? "queen"
+      elsif card.include? "queen"
         card_object[:number] = 12
-      elsif card.downcase.include? "king"
+      elsif card.include? "king"
         card_object[:number] = 13
-      elsif card.downcase.include? "ace"
+      elsif card.include? "ace"
         card_object[:number] = 1
       end
-      if card.downcase.include? "hearts"
-        card_object[:suit] = 1
-      elsif card.downcase.include? "diamonds"
-        card_object[:suit] = 2
-      elsif card.downcase.include? "clubs"
-        card_object[:suit] = 3
-      elsif card.downcase.include? "spades"
-        card_object[:suit] = 4
+      card_object[:suit] =
+      if card.include?("heart")
+        1
+      elsif card.include?("diamond")
+        2
+      elsif card.include?("club")
+        3
+      else
+        4
       end
       new_cards.push(card_object)
     end
     return new_cards
-  end
-
-  def sort_by_suit(cards)
   end
 
   def royal_flush?
@@ -78,7 +60,6 @@ class Poker
       return false
     end
     for i in 1..3
-      puts cards[i][:number] + 1
       if cards[i][:suit] == cards[i+1][:suit] && cards[i][:number] + 1 == cards[i+1][:number]
         suit_count += 1
         number_count += 1
@@ -241,13 +222,13 @@ class Poker
   end
 
 end
-royal_flush = Poker.new(["Ace of Diamonds", "King of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "10 of Diamonds"])
-straight_flush = Poker.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
-four_kind = Poker.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-three_kind = Poker.new(["4 of Hearts", "3 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-full_house = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-flush = Poker.new(["10 of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
-straight = Poker.new(["10 of Hearts", "9 of Diamonds", "8 of Clubs", "7 of Diamonds", "6 of Diamonds"])
-two_pair = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "5 of Clubs"])
-pair = Poker.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "Ace of Diamonds", "King of Clubs"])
-random_hand = Poker.new(["4 of Hearts", "2 of Diamonds", "7 of Spades", "Queen of Diamonds", "King of Clubs"])
+royal_flush = PokerHand.new(["Ace of Diamonds", "King of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "10 of Diamonds"])
+straight_flush = PokerHand.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
+four_kind = PokerHand.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+three_kind = PokerHand.new(["4 of Hearts", "3 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+full_house = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+flush = PokerHand.new(["10 of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
+straight = PokerHand.new(["10 of Hearts", "9 of Diamonds", "8 of Clubs", "7 of Diamonds", "6 of Diamonds"])
+two_pair = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "5 of Clubs"])
+pair = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "Ace of Diamonds", "King of Clubs"])
+random_hand = PokerHand.new(["4 of Hearts", "2 of Diamonds", "7 of Spades", "Queen of Diamonds", "King of Clubs"])
