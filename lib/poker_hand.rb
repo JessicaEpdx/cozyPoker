@@ -90,11 +90,8 @@ class PokerHand
     grouped = cards.group_by{ |c| c[:number] }
     keys = grouped.keys
     for key in keys
-      if grouped[key].length == 4
-        four_of_a_kind = true
-      end
+      return grouped[key].length == 4
     end
-    return four_of_a_kind
   end
 
   def full_house?
@@ -179,20 +176,20 @@ class PokerHand
 
   def high_card
     cards = self.change_cards
-    high_card = 0
+    highest = 0
     for card in cards do
-      if card[:number].to_i >= high_card.to_i
-        high_card = card[:number].to_i
+      if card[:number].to_i >= highest.to_i
+        highest = card[:number].to_i
       end
     end
-    if high_card == 11
+    if highest == 11
       return "Jack"
-    elsif high_card == 12
+    elsif highest == 12
       return "Queen"
-    elsif high_card == 13
+    elsif highest == 13
       return "King"
     else
-      return high_card
+      return highest
     end
   end
 
@@ -211,7 +208,7 @@ class PokerHand
     elsif cards.straight?
       return "Straight."
     elsif cards.three_of_a_kind?
-      return "Three of a kind."
+      return "Three of a Kind."
     elsif cards.two_pair?
       return "Two Pair."
     elsif cards.pair?
@@ -222,13 +219,13 @@ class PokerHand
   end
 
 end
-royal_flush = PokerHand.new(["Ace of Diamonds", "King of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "10 of Diamonds"])
-straight_flush = PokerHand.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
-four_kind = PokerHand.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-three_kind = PokerHand.new(["4 of Hearts", "3 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-full_house = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
-flush = PokerHand.new(["10 of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
-straight = PokerHand.new(["10 of Hearts", "9 of Diamonds", "8 of Clubs", "7 of Diamonds", "6 of Diamonds"])
-two_pair = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "5 of Clubs"])
-pair = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "Ace of Diamonds", "King of Clubs"])
-random_hand = PokerHand.new(["4 of Hearts", "2 of Diamonds", "7 of Spades", "Queen of Diamonds", "King of Clubs"])
+# royal_flush = PokerHand.new(["Ace of Diamonds", "King of Diamonds", "Jack of Diamonds", "Queen of Diamonds", "10 of Diamonds"])
+# straight_flush = PokerHand.new(["Ace of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
+# four_kind = PokerHand.new(["4 of Hearts", "4 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+# three_kind = PokerHand.new(["4 of Hearts", "3 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+# full_house = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "4 of Clubs"])
+# flush = PokerHand.new(["10 of Diamonds", "3 of Diamonds", "2 of Diamonds", "4 of Diamonds", "5 of Diamonds"])
+# straight = PokerHand.new(["10 of Hearts", "9 of Diamonds", "8 of Clubs", "7 of Diamonds", "6 of Diamonds"])
+# two_pair = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "2 of Diamonds", "5 of Clubs"])
+# pair = PokerHand.new(["4 of Hearts", "2 of Diamonds", "4 of Spades", "Ace of Diamonds", "King of Clubs"])
+# random_hand = PokerHand.new(["4 of Hearts", "2 of Diamonds", "7 of Spades", "Queen of Diamonds", "King of Clubs"])
